@@ -19,7 +19,8 @@ const markup = galleryItems
   .join("");
 galleryList.insertAdjacentHTML("afterbegin", markup);
 galleryList.addEventListener("click", openFullItem);
-function openFullItem(e) {
+function openFullItem(e) { 
+  e.preventDefault()
   if (e.target.tagName !== "IMG") {
     return;
   }
