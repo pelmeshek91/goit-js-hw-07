@@ -19,16 +19,28 @@ const markup = galleryItems
   .join("");
 galleryList.insertAdjacentHTML("afterbegin", markup);
 galleryList.addEventListener("click", openFullItem);
-function openFullItem(e) { 
-  e.preventDefault()
+let instance = {};
+
+function openFullItem(e) {
+  e.preventDefault();
   if (e.target.tagName !== "IMG") {
     return;
   }
-  const instance = basicLightbox.create(`
+  instance = basicLightbox.create(`
     <img
       class="gallery__image"
       src="${e.target.dataset.source}"
     />
 `);
   instance.show();
+  document.addEventListener("keydown", closeByEscape);
+  // galleryList.removeEventListener("click", openFullItem);
+}
+
+function closeByEscape(e) {
+  if (e.code === "Escape") {
+    instance.close();
+    document.removeEventListener("keydown", closeByEscape);
+    // galleryList.addEventListener("click", openFullItem);
+  }
 }
